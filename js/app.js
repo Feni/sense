@@ -4,7 +4,7 @@ var instances = [
         "fDef": 0,
         "name": "random name",
         args: {"Value": 5},
-        isEdit: false
+        isEdit: true
     }
 ];
 
@@ -16,11 +16,7 @@ Vue.component('function-instance', {
     },
     computed: {
         fDef: function() {
-            console.log(this.instance.fDef);
             return window.fDefs[this.instance.fDef];
-        },
-        output: function() {
-            return window.fDefs[this.instance.fDef].func(this.args);
         }
     }, 
     methods: {
@@ -29,6 +25,9 @@ Vue.component('function-instance', {
         },
         saveEdit: function() {
             this.onEdit(this.instance.id);
+        },
+        output: function() {
+            return window.fDefs[this.instance.fDef].func(this.args);
         }
     }
 })
@@ -38,7 +37,7 @@ TYPES = ["String", "Number", "Boolean", "Function", "Object", "Array", "Referenc
 
 window.fDefs = [
     {
-        "id": 1,
+        "id": 0,
         "name": "Number", 
         "parameters": [
             {
@@ -50,7 +49,24 @@ window.fDefs = [
             return args["Value"];
         }
     },
-    {"name": "Add", "id": 2},
+    {
+        "id": 1,
+        "name": "Add",
+        "parameters": [
+            {
+                "name": "a",
+                "type": "number"
+            },
+            {
+                "name": "b",
+                "type": "number"
+            }
+    ], 
+     func: function(args) {
+         console.log(args);
+         return args["a"] + args["b"];
+     }
+    },
 ];
 
 window.currentEdit = -1;
@@ -61,12 +77,26 @@ var app = new Vue({
     data: {
         message: 'Hello Vue!',
         functionDefinitions: window.fDefs, 
-        instances: instances
+        instances: instances,
+        newFuncId: 0
     }, 
     methods: {
         toggleInstanceEdit(index) {
             console.log(this.instances[index]);
             this.instances[index].isEdit = !this.instances[index].isEdit;
+        }, 
+        showAddInstance() {
+            console.log("show add instance");
+            console.log(this.newFuncId);
+            let newInstance = {
+                "id": window.maxInstanceId++,
+                "fDef": this.newFuncId,
+                "name": "New Function",
+                "args": {},
+                "isEdit": false
+            }
+            instances.push(newInstance);
+            // this.instances.push(newInstance);
         }
     }
 });

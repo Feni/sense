@@ -46,7 +46,7 @@ ul {
 }
 
 
-.FuncInstance {
+.FuncInstance, .Box {
     border: 1px solid #aaa;
     padding: 8px;
     display: table;
@@ -74,12 +74,33 @@ ul {
     line-height: 1.4;
 }
 .FInstanceName-type {
-    font-size: 0.7em;
+    font-size: 0.8em;
     color: #333;
+}
+
+.FIParameter-label {
+    font-size: 0.8em;
 }
 
 .FInstanceOutput {
     vertical-align: middle;
     display: table-cell;
     padding-left: 8px;
+    min-width: 40px;
+    text-align: center;
+}
+
+.Button {
+    border: 1px solid #777;
+    padding: 5px 15px;
+    cursor: pointer;
+}
+
+.margin-top {
+    margin-top: 1em;
+}
+
+input {
+    font-size: 1em;
+    padding: 0.2em 0.3em;
 }

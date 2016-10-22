@@ -20,6 +20,16 @@
             <function-instance v-bind:instance="instance" 
                                v-bind:on-edit="toggleInstanceEdit"></function-instance>
         </span>
+        
+        
+        <div class="AddFunctionInstance Box">
+            <select v-model="newFuncId">
+                <option v-for="fOption in functionDefinitions" v-bind:value="fOption.id">
+                    {{ fOption.name }}
+                </option>
+            </select>
+            <div class="Button" v-on:click="showAddInstance">Add Step</div>
+        </div>
     </div>
     </div>
     
@@ -27,12 +37,16 @@
         <div class='FuncInstance'>
             <div class="FuncInstance-wrapper">
             <div v-if="isEdit">
-                <h1>{{ fDef.name }}</h1>
+                <span class="FInstanceName-type">{{ fDef.name }}</span>
+                <input class="FInstanceName-input" v-model='name'></input>
                 <div v-for='param in fDef.parameters'>
-                    <label>{{ param.name }}</label><br>
-                    <input v-bind:type='param.type' v-model='args[param.name]'></input>
+                    <label class="FIParameter-label">{{ param.name }}</label><br>
+                    <span v-if="param.type == 'number'">
+                    <input type='number' v-model='args[param.name]'></input>
+                    </span>
+                    <span v-else>Unknown input type</span>
                 </div>
-                <div class="Button Button-save" v-on:click="saveEdit">
+                <div class="Button Button-save margin-top" v-on:click="saveEdit">
                     Save
                 </div>
             </div>
@@ -42,7 +56,7 @@
                     <span class="FInstanceName-type">{{ fDef.name }}</span>
                 </span>
                 <span class="FInstanceOutput">
-                    {{ args.Value }}
+                    {{ output() }}
                 </span>
             </div>
             </div>
