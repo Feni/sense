@@ -1,0 +1,44 @@
+body{
+    margin:0;
+    line-height:1.6;
+    width: 100%;
+    font-size:18px;
+    color:#212121;
+    padding:0 0x;
+    height: 100%;
+    font-family: "Open Sans", sans-serif;
+}
+
+h1,h2,h3{
+    line-height:1.2
+}
+
+header h1 {
+    padding: 10px 20px;
+    border-bottom: 1px solid #aaa;
+    margin-bottom: 0;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.Sidebar {
+    width: 240px;
+    height: 100%;
+    background-color: #f0f0f0;
+    display: inline-block; 
+    float: left;
+    font-size: .9em;
+}
+
+.Sidebar ul li {
+    border-bottom: 2.5px solid #fff;
+    padding: 3px 10px
+}
+
+.MainContents {
+    width: calc(100% - 240px);
+    float: right;
+}
