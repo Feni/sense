@@ -7,20 +7,48 @@
     <header>
         <h1 class="Logo">Sense</h1>
     </header>
+    <div id="app">
     <span class="Sidebar">
         <ul>
-            <li>Item One</li>
-            <li>Item Two</li>
-            <li>Item Three</li>
+            <li v-for="fDef in functionDefinitions">{{ fDef.name }}</li>
         </ul>
         
     </span>
-    
+            
     <div class="MainContents">
-        {{ message }}
+        <span v-for="(instance, index) in instances">
+            <function-instance v-bind:instance="instance" 
+                               v-bind:on-edit="toggleInstanceEdit"></function-instance>
+        </span>
     </div>
-    <script src="node_modules/vue/dist/vue.js"></script>
+    </div>
+    
+    <script type="text/x-template" id="tmpl-function-instance">
+        <div class='FuncInstance'>
+            <div class="FuncInstance-wrapper" v-on:click="toggleEdit">
+            <div v-if="instance.isEdit">
+                <h1>{{ fDef.name }}</h1>
+                <div v-for='param in fDef.parameters'>
+                    <label>{{ param.name }}</label><br>
+                    <input v-bind:type='param.type'></input>
+                </div>
+            </div>
+            <div v-else>
+                <span class="FInstanceName">
+                    <span class="FInstanceName-label">{{ instance.name }}</span>
+                    <span class="FInstanceName-type">{{ fDef.name }}</span>
+                </span>
+                <span class="FInstanceOutput">
+                    {{ output }}
+                </span>
+            </div>
+            </div>
+        </div>
+    </script>
 
+
+    
+    <script src="node_modules/vue/dist/vue.js"></script>
     <script src="js/app.js"></script>
 
 </body>

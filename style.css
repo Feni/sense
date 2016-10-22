@@ -7,6 +7,7 @@ body{
     padding:0 0x;
     height: 100%;
     font-family: "Open Sans", sans-serif;
+    font-size: 16px;
 }
 
 h1,h2,h3{
@@ -25,9 +26,10 @@ ul {
 }
 
 .Sidebar {
-    width: 240px;
+    width: 239px;
     height: 100%;
-    background-color: #f0f0f0;
+    /* background-color: #f0f0f0; */
+    border-right: 1px solid #f0f0f0;
     display: inline-block; 
     float: left;
     font-size: .9em;
@@ -41,4 +43,43 @@ ul {
 .MainContents {
     width: calc(100% - 240px);
     float: right;
+}
+
+
+.FuncInstance {
+    border: 1px solid #aaa;
+    padding: 8px;
+    display: table;
+}
+
+.FuncInstance h1 {
+    margin: 0;
+}
+
+.FuncInstance-wrapper {
+    display: table-row;
+}
+
+.FInstanceName {
+    display: inline-block;
+    width: 180px;
+    border-right: 1px solid #aaa;
+    font-size: 1em;
+    display: table-cell;
+}
+
+.FInstanceName-label, .FInstanceName-type {
+    display: block;
+    color: black;
+    line-height: 1.4;
+}
+.FInstanceName-type {
+    font-size: 0.7em;
+    color: #333;
+}
+
+.FInstanceOutput {
+    vertical-align: middle;
+    display: table-cell;
+    padding-left: 8px;
 }
