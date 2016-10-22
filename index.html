@@ -25,27 +25,29 @@
     
     <script type="text/x-template" id="tmpl-function-instance">
         <div class='FuncInstance'>
-            <div class="FuncInstance-wrapper" v-on:click="toggleEdit">
-            <div v-if="instance.isEdit">
+            <div class="FuncInstance-wrapper">
+            <div v-if="isEdit">
                 <h1>{{ fDef.name }}</h1>
                 <div v-for='param in fDef.parameters'>
                     <label>{{ param.name }}</label><br>
-                    <input v-bind:type='param.type'></input>
+                    <input v-bind:type='param.type' v-model='args[param.name]'></input>
+                </div>
+                <div class="Button Button-save" v-on:click="saveEdit">
+                    Save
                 </div>
             </div>
-            <div v-else>
+            <div v-else v-on:click="toggleEdit">
                 <span class="FInstanceName">
-                    <span class="FInstanceName-label">{{ instance.name }}</span>
+                    <span class="FInstanceName-label">{{ name }}</span>
                     <span class="FInstanceName-type">{{ fDef.name }}</span>
                 </span>
                 <span class="FInstanceOutput">
-                    {{ output }}
+                    {{ args.Value }}
                 </span>
             </div>
             </div>
         </div>
     </script>
-
 
     
     <script src="node_modules/vue/dist/vue.js"></script>

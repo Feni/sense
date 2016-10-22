@@ -1,17 +1,33 @@
+var instances = [
+    {
+        "id": 0,
+        "fDef": 0,
+        "name": "random name",
+        args: {"Value": 5},
+        isEdit: false
+    }
+];
+
 Vue.component('function-instance', {
     props: ['instance', 'onEdit'],
     template: "#tmpl-function-instance",
+    data: function() {
+        return instances[this.instance.id];
+    },
     computed: {
         fDef: function() {
             console.log(this.instance.fDef);
             return window.fDefs[this.instance.fDef];
-        }, 
+        },
         output: function() {
-            return window.fDefs[this.instance.fDef].func(this.instance.args);
+            return window.fDefs[this.instance.fDef].func(this.args);
         }
     }, 
     methods: {
         toggleEdit: function() {
+            this.onEdit(this.instance.id);
+        },
+        saveEdit: function() {
             this.onEdit(this.instance.id);
         }
     }
@@ -45,18 +61,11 @@ var app = new Vue({
     data: {
         message: 'Hello Vue!',
         functionDefinitions: window.fDefs, 
-        instances: [
-            {
-                "id": 0, 
-                "fDef": 0, 
-                "name": "random name", 
-                args: {"Value": 5}, 
-                isEdit: false
-            }
-        ]
+        instances: instances
     }, 
     methods: {
         toggleInstanceEdit(index) {
+            console.log(this.instances[index]);
             this.instances[index].isEdit = !this.instances[index].isEdit;
         }
     }
