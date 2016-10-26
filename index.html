@@ -30,9 +30,14 @@
             </select>
             <div class="Button" v-on:click="showAddInstance">Add Step</div>
         </div>
+        
+        
+        
+        <key-value-list></key-value-list>
+        
     </div>
     </div>
-    
+     
     <script type="text/x-template" id="tmpl-function-instance">
         <div class='FuncInstance'>
             <div class="FuncInstance-wrapper">
@@ -61,6 +66,19 @@
             </div>
             </div>
         </div>
+    </script>
+    
+    
+    <script type="text/x-template" id="tmpl-key-val">
+        <ul>
+            <li v-for="item in items">
+                <input class="inKey" v-model="item.key" autofocus></input>
+                <input class="inVal" v-model="item.value" autofocus></input>
+            </li>
+            
+            <input v-on:input="addNewKey" v-model="newkey"></input>
+            <input v-on:input="addNewValue" v-model="newvalue"></input>
+        </ul>
     </script>
 
     
