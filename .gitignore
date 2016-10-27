@@ -5,3 +5,5 @@ dist/build.js
 npm-debug.log
 src/frontend/elm-stuff/*
 elm-stuff/*
+*.pyc
+.cache/*
