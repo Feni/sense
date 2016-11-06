@@ -8,32 +8,83 @@
         <h1 class="Logo">Sense</h1>
     </header>
     <div id="app">
+        <!--
     <span class="Sidebar">
         <ul>
             <li v-for="fDef in functionDefinitions">{{ fDef.name }}</li>
         </ul>
-        
     </span>
+    -->
             
     <div class="MainContents">
-        <span v-for="(instance, index) in instances">
-            <function-instance v-bind:instance="instance" 
-                               v-bind:on-edit="toggleInstanceEdit"></function-instance>
-        </span>
-        
-        
-        <div class="AddFunctionInstance Box">
-            <select v-model="newFuncId">
-                <option v-for="fOption in functionDefinitions" v-bind:value="fOption.id">
-                    {{ fOption.name }}
-                </option>
-            </select>
-            <div class="Button" v-on:click="showAddInstance">Add Step</div>
-        </div>
-        
-        
-        
-        <key-value-list></key-value-list>
+        <table>
+            <caption>Description of the table</caption>
+            <thead>
+                <tr>
+                    <th class="transparent"></th>
+                    <th>Date</th>
+                    <th>Source</th>
+                    <th>New Customer?</th>
+                    <th>Customer</th>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th class="action">+</th>
+                </tr>
+                <tr>
+                    <th class="transparent"></th>
+                    <th>date</th>
+                    <th>text</th>
+                    <th>boolean</th>
+                    <th>relation</th>
+                    <th>relation</th>
+                    <th>number</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th rowspan="2">1</th>
+                    <td rowspan="2">2016/05/10</td>
+                    <td rowspan="2">Internet</td>
+                    <td rowspan="2">Yes</td>
+                    <td rowspan="2">John</td>
+                    <!-- Should be able to collapse and expand this -->
+                    <td>Item 1</td>
+                    <td>3</td>
+                </tr>
+                <tr>
+                    <td>Item 2</td>
+                    <td>5</td>
+                </tr>
+                
+                <tr>
+                    <th>2</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                
+                <tr>
+                    <th>3</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                
+                
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Total</th>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
         
     </div>
     </div>

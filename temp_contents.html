@@ -1,0 +1,15 @@
+<span v-for="(instance, index) in instances">
+    <function-instance v-bind:instance="instance" 
+                       v-bind:on-edit="toggleInstanceEdit"/>
+</span>
+
+<div class="AddFunctionInstance Box">
+    <select v-model="newFuncId">
+        <option v-for="fOption in functionDefinitions" v-bind:value="fOption.id">
+            {{ fOption.name }}
+        </option>
+    </select>
+    <div class="Button" v-on:click="showAddInstance">Add Step</div>
+</div>
+
+<key-value-list></key-value-list>
