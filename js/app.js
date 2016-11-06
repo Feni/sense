@@ -64,10 +64,67 @@ Vue.component('key-value-list', {
         },
         addNewValue: function(evnt) {
             this.addAndFocus(".inVal");
-            
         }
     }
 })
+
+
+Vue.component('dynamic-table', {
+    template: "#tmpl-dynamic-table",
+    data: function() {
+        return {
+            "columns": ["date", "source", "new customer", "customer", "items", "quantity"],
+            "rows": [
+                {"source": "internet", "items": [1, 2, 3]},
+            ]
+        }
+    }, 
+    computed: {
+        renderedTable: function() {
+            let renderedRows = [];
+            for(var r = 0; r < this.rows.length; r++){
+                // let row = [];
+                let rowspan = 1;
+                // Compute rowspan
+                for(var c = 0; c < this.columns.length; c++){
+                    let columnVal = this.rows[r][this.columns[c]];
+                    if(columnVal instanceof Array){
+                        if(columnVal.length > rowspan) {
+                            rowspan = columnVal.length;
+                        }
+                    }
+                }
+                
+                for(var rowId = 0; rowId < rowspan; rowId++) {
+                    let currentRow = [];
+                    for(var c = 0; c < this.columns.length; c++){
+                        let columnVal = this.rows[r][this.columns[c]];
+                        if(columnVal instanceof Array){
+                            if(rowId < columnVal.length){
+                                currentRow.push({
+                                    "rowspan": 1,
+                                    "value": columnVal[rowId]
+                                })
+                            }
+                        }
+                        else {
+                            if(rowId === 0){
+                                currentRow.push({
+                                    "rowspan": rowspan, 
+                                    "value": columnVal
+                                });
+                            }
+                        }
+                    }
+                    renderedRows.push(currentRow);
+                }
+                // renderedRows.push(row);
+            }
+            return renderedRows;
+        }
+    }
+})
+
 
 TYPES = ["String", "Number", "Boolean", "Function", "Object", "Array", "Reference"]
 

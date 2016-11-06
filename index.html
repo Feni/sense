@@ -86,6 +86,10 @@
             </tfoot>
         </table>
         
+        <h2>Dynamic table</h2>
+        
+        <dynamic-table></dynamic-table>
+        
     </div>
     </div>
      
@@ -117,6 +121,27 @@
             </div>
             </div>
         </div>
+    </script>
+    
+    
+    <script type="text/x-template" id="tmpl-dynamic-table">
+        <table>
+            <thead>
+                <tr>
+                    <th v-for="col in columns">{{ col }}</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                <template v-for="row in renderedTable">
+                    <tr>
+                    <template v-for="col in row">
+                        <td v-bind:rowspan="col.rowspan">{{col.value}}</td>
+                    </template>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
     </script>
     
     
