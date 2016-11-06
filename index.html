@@ -128,16 +128,22 @@
         <table>
             <thead>
                 <tr>
+                    <th></th>
                     <th v-for="col in columns">{{ col }}</th>
                 </tr>
             </thead>
             
             <tbody>
-                <template v-for="row in renderedTable">
+                <template v-for="(row, rowindex) in renderedTable">
                     <tr>
-                    <template v-for="col in row">
-                        <td v-bind:rowspan="col.rowspan">{{col.value}}</td>
-                    </template>
+                        <template v-for="(col, colindex) in row">
+                            <template v-if="col.header">
+                                <th v-bind:rowspan="col.rowspan">{{col.value}}</th>
+                            </template>
+                            <template v-else>
+                                <td v-bind:rowspan="col.rowspan">{{col.value}}</td>
+                            </template>
+                        </template>
                     </tr>
                 </template>
             </tbody>

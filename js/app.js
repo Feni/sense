@@ -75,7 +75,12 @@ Vue.component('dynamic-table', {
         return {
             "columns": ["date", "source", "new customer", "customer", "items", "quantity"],
             "rows": [
-                {"source": "internet", "items": [1, 2, 3]},
+                {"date": "2016/05/10", 
+                 "source": "internet", 
+                 "new customer": "Yes",
+                 "items": ["Item 1", "Item 2"], 
+                 "quantity": [3, 5, 7]
+                },
             ]
         }
     }, 
@@ -97,6 +102,10 @@ Vue.component('dynamic-table', {
                 
                 for(var rowId = 0; rowId < rowspan; rowId++) {
                     let currentRow = [];
+                    if(rowId === 0){
+                        currentRow.push({rowspan: rowspan, value: r + 1, "header": true});
+                    }
+                    
                     for(var c = 0; c < this.columns.length; c++){
                         let columnVal = this.rows[r][this.columns[c]];
                         if(columnVal instanceof Array){
@@ -104,6 +113,11 @@ Vue.component('dynamic-table', {
                                 currentRow.push({
                                     "rowspan": 1,
                                     "value": columnVal[rowId]
+                                })
+                            } else {
+                                currentRow.push({
+                                    "rowspan": 1,
+                                    "value": ""
                                 })
                             }
                         }
