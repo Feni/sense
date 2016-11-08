@@ -72,7 +72,7 @@
                                 <th v-bind:rowspan="col.rowspan">{{col.value}}</th>
                             </template>
                             <template v-else>
-                                <td v-on:click="select" v-bind:rowspan="col.rowspan">{{col.value}}</td>
+                                <td v-on:click="select(col, $event)" v-bind:rowspan="col.rowspan">{{col.value}}</td>
                             </template>
                         </template>
                     </tr>
@@ -82,7 +82,7 @@
         
         
         <div class="CellInput" v-bind:class="{ hidden: !selected.active}" v-bind:style="{left: selected.x, top: selected.y, width: selected.width, height: selected.height}">
-            <textarea></textarea>
+            <textarea v-model="selected.value"></textarea>
         </div>
         
         </div>

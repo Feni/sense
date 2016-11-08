@@ -95,7 +95,8 @@ Vue.component('dynamic-table', {
                 "y": 99,
                 "width": 20,
                 "height": 20,
-                "active": true
+                "active": false,
+                "value": ""
             }
         }
     }, 
@@ -127,12 +128,16 @@ Vue.component('dynamic-table', {
                             if(rowId < columnVal.length){
                                 currentRow.push({
                                     "rowspan": 1,
-                                    "value": columnVal[rowId]
+                                    "value": columnVal[rowId],
+                                    "row": r,
+                                    "column": c
                                 })
                             } else {
                                 currentRow.push({
                                     "rowspan": 1,
-                                    "value": ""
+                                    "value": "",
+                                    "row": r,
+                                    "column": c
                                 })
                             }
                         }
@@ -140,7 +145,9 @@ Vue.component('dynamic-table', {
                             if(rowId === 0){
                                 currentRow.push({
                                     "rowspan": rowspan, 
-                                    "value": columnVal
+                                    "value": columnVal,
+                                    "row": r,
+                                    "column": c
                                 });
                             }
                         }
@@ -153,13 +160,23 @@ Vue.component('dynamic-table', {
         }
     }, 
     methods: {
-        select: function(event) {
+        select: function(col, event) {
+            console.log(col);
             console.log(event);
             window.evt = event;
+            if(this.selected.active){
+                // Save the existing value
+                this.rows[this.selected.row][this.columns[this.selected.column]] = this.selected.value;
+            }
+            
+            this.selected.active = true;
             this.selected.x = event.target.offsetLeft;
             this.selected.y = event.target.offsetTop;
             this.selected.width = event.target.offsetWidth;
             this.selected.height = event.target.offsetHeight;
+            this.selected.row = col.row;
+            this.selected.column = col.column;
+            this.selected.value = col.value;
         }
     }
 })
