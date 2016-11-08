@@ -73,7 +73,12 @@ Vue.component('dynamic-table', {
     template: "#tmpl-dynamic-table",
     data: function() {
         return {
-            "columns": ["date", "source", "new customer", "customer", "items", "quantity"],
+            "columns": ["date", 
+                        "source", 
+                        "new customer", 
+                        "customer", 
+                        "items", 
+                        "quantity"],
             "rows": [
                 {"date": "2016/05/10", 
                  "source": "internet", 
@@ -81,7 +86,17 @@ Vue.component('dynamic-table', {
                  "items": ["Item 1", "Item 2"], 
                  "quantity": [3, 5, 7]
                 },
-            ]
+            ],
+            "selected": {
+                "row": 2,
+                "column": 0,
+                "listindex": 0, 
+                "x": 132,
+                "y": 99,
+                "width": 20,
+                "height": 20,
+                "active": true
+            }
         }
     }, 
     computed: {
@@ -94,8 +109,8 @@ Vue.component('dynamic-table', {
                 for(var c = 0; c < this.columns.length; c++){
                     let columnVal = this.rows[r][this.columns[c]];
                     if(columnVal instanceof Array){
-                        if(columnVal.length > rowspan) {
-                            rowspan = columnVal.length;
+                        if(columnVal.length >= rowspan) {
+                            rowspan = columnVal.length + 1;
                         }
                     }
                 }
@@ -135,6 +150,16 @@ Vue.component('dynamic-table', {
                 // renderedRows.push(row);
             }
             return renderedRows;
+        }
+    }, 
+    methods: {
+        select: function(event) {
+            console.log(event);
+            window.evt = event;
+            this.selected.x = event.target.offsetLeft;
+            this.selected.y = event.target.offsetTop;
+            this.selected.width = event.target.offsetWidth;
+            this.selected.height = event.target.offsetHeight;
         }
     }
 })

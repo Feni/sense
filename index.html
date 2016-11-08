@@ -17,77 +17,7 @@
     -->
             
     <div class="MainContents">
-        <table>
-            <caption>Description of the table</caption>
-            <thead>
-                <tr>
-                    <th class="transparent"></th>
-                    <th>Date</th>
-                    <th>Source</th>
-                    <th>New Customer?</th>
-                    <th>Customer</th>
-                    <th>Item</th>
-                    <th>Quantity</th>
-                    <th class="action">+</th>
-                </tr>
-                <tr>
-                    <th class="transparent"></th>
-                    <th>date</th>
-                    <th>text</th>
-                    <th>boolean</th>
-                    <th>relation</th>
-                    <th>relation</th>
-                    <th>number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th rowspan="2">1</th>
-                    <td rowspan="2">2016/05/10</td>
-                    <td rowspan="2">Internet</td>
-                    <td rowspan="2">Yes</td>
-                    <td rowspan="2">John</td>
-                    <!-- Should be able to collapse and expand this -->
-                    <td>Item 1</td>
-                    <td>3</td>
-                </tr>
-                <tr>
-                    <td>Item 2</td>
-                    <td>5</td>
-                </tr>
-                
-                <tr>
-                    <th>2</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                
-                <tr>
-                    <th>3</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                
-                
-            </tbody>
-            <tfoot>
-                <tr>
-                    <th>Total</th>
-                    <td></td>
-                </tr>
-            </tfoot>
-        </table>
-        
-        <h2>Dynamic table</h2>
-        
+        <h2 contenteditable>Table Name</h2>
         <dynamic-table></dynamic-table>
         
     </div>
@@ -125,6 +55,7 @@
     
     
     <script type="text/x-template" id="tmpl-dynamic-table">
+        <div class="relative">
         <table>
             <thead>
                 <tr>
@@ -141,13 +72,20 @@
                                 <th v-bind:rowspan="col.rowspan">{{col.value}}</th>
                             </template>
                             <template v-else>
-                                <td v-bind:rowspan="col.rowspan">{{col.value}}</td>
+                                <td v-on:click="select" v-bind:rowspan="col.rowspan">{{col.value}}</td>
                             </template>
                         </template>
                     </tr>
                 </template>
             </tbody>
         </table>
+        
+        
+        <div class="CellInput" v-bind:class="{ hidden: !selected.active}" v-bind:style="{left: selected.x, top: selected.y, width: selected.width, height: selected.height}">
+            <textarea></textarea>
+        </div>
+        
+        </div>
     </script>
     
     
