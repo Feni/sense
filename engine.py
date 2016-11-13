@@ -14,24 +14,29 @@ class Engine:
             return "-" + relation
 
     def statement(self, statement_graph):
-        for node, relations in statement_graph.items():
-            for relation, related_nodes in relations.items():
-                for related_node in related_nodes:
-                    self.graph[node][relation].append(related_node)
-                    self.graph[related_node][self.inverse_relation(relation)].append(node)
+        for nodes, relations in statement_graph.items():
+            if not isinstance(nodes, tuple):
+                nodes = tuple([nodes])
+            for node in nodes:
+                for relation, related_nodes in relations.items():
+                    for related_node in related_nodes:
+                        self.graph[node][relation].append(related_node)
+                        self.graph[related_node][self.inverse_relation(relation)].append(node)
 
     def query(self, query_graph):
+        # Right now only supports a single unknown per query
+        # Finds the closest match - implicit and of all queries.
         response = []
         for node, relations in query_graph.items():
-            for relation, related_nodes in relations.items():
-                for related_node in related_nodes:
-                    if node == "UNKNOWN":
+            if node == "UNKNOWN":
+                node_matches = []
+                for relation, related_nodes in relations.items():
+                    for related_node in related_nodes:
                         # Work backwards from the relations
-                        assert related_node != "UNKNOWN"
-                        return self.graph[related_node][self.inverse_relation(relation)]
-                    elif related_node == "UNKNOWN":
-                        # Forward lookup
-                        return self.graph[node][relation]
+                        tuple(self.graph[related_node][self.inverse_relation(relation)])
+            elif related_node == "UNKNOWN":
+                # Forward lookup
+                return tuple(self.graph[node][relation])
 
     def list_all(self):
         print self.graph

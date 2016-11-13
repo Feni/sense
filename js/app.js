@@ -165,6 +165,7 @@ Vue.component('dynamic-table', {
             console.log(event);
             window.evt = event;
             if(this.selected.active){
+                // TODO: Fix bug with setting an item at index for array types.
                 // Save the existing value
                 this.rows[this.selected.row][this.columns[this.selected.column]] = this.selected.value;
             }
