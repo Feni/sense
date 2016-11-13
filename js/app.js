@@ -80,17 +80,27 @@ Vue.component('dynamic-table', {
                         "items", 
                         "quantity"],
             "rows": [
-                {"date": "2016/05/10", 
-                 "source": "internet", 
-                 "new customer": "Yes",
-                 "items": ["Item 1", "Item 2"], 
-                 "quantity": [3, 5, 7]
+                {
+                    "id": 1,
+                    "date": "2016/05/10",
+                    "source": "internet",
+                    "customer": "",
+                    "new customer": "Yes",
+                    "items": ["Item 1", "Item 2"], 
+                    "quantity": [3, 5, 7]
                 },
+                {
+                    "id": 2,
+                    "date": "2016/07/10",
+                    "source": "walkin",
+                    "new customer": "No",
+                    "customer": "Bob",
+                    "items": ["Item 1"], 
+                    "quantity": [1]
+                }
             ],
             "selected": {
-                "row": 2,
-                "column": 0,
-                "listindex": 0, 
+                "path": {},
                 "x": 132,
                 "y": 99,
                 "width": 20,
@@ -123,21 +133,37 @@ Vue.component('dynamic-table', {
                     }
                     
                     for(var c = 0; c < this.columns.length; c++){
-                        let columnVal = this.rows[r][this.columns[c]];
+                        let columnName = this.columns[c];
+                        let columnVal = this.rows[r][columnName];
                         if(columnVal instanceof Array){
                             if(rowId < columnVal.length){
+                                let value = columnVal[rowId]
                                 currentRow.push({
                                     "rowspan": 1,
-                                    "value": columnVal[rowId],
-                                    "row": r,
-                                    "column": c
+                                    "value": value,
+                                    "path": {
+                                        "id": r,
+                                        columnName: value,
+                                        "_next": {
+                                            "_index": rowId
+                                        },
+                                        "_row": "id",
+                                        "_col": columnName
+                                    }
                                 })
-                            } else {
+                            } else if (rowId === columnVal.length) {
                                 currentRow.push({
-                                    "rowspan": 1,
+                                    "rowspan": rowspan - columnVal.length,
                                     "value": "",
-                                    "row": r,
-                                    "column": c
+                                    "path": {
+                                        "id": r,
+                                        columnName: "",
+                                        "_next": {
+                                            "_index": rowId
+                                        },
+                                        "_row": "id",
+                                        "_col": columnName
+                                    }
                                 })
                             }
                         }
@@ -146,8 +172,12 @@ Vue.component('dynamic-table', {
                                 currentRow.push({
                                     "rowspan": rowspan, 
                                     "value": columnVal,
-                                    "row": r,
-                                    "column": c
+                                    "path": {
+                                        "id": r,
+                                        columnName: columnVal,
+                                        "_row": "id",
+                                        "_col": columnName
+                                    }
                                 });
                             }
                         }
@@ -158,16 +188,36 @@ Vue.component('dynamic-table', {
             }
             return renderedRows;
         }
-    }, 
+    },
     methods: {
+        setItem: function(path, value) {
+            console.log(path);
+            // TODO: This should eventually work for infinitely nested objects.
+            let row = path["id"];
+            let col = path["_col"];
+            console.log(path["_next"] !== undefined);
+            if (path["_next"] !== undefined){
+                let index = path["_next"]["_index"]
+                // Have to do it this way to force it to update properly
+                var arrClone = this.rows[row][col].slice(0);
+                arrClone[index] = value;
+                if (index == arrClone.length -1 && value == "") {
+                    arrClone.pop()
+                }
+                this.rows[row][col] = arrClone;
+                
+            } else {
+                this.rows[row][col] = value;
+            }
+                
+        },
         select: function(col, event) {
             console.log(col);
             console.log(event);
             window.evt = event;
             if(this.selected.active){
-                // TODO: Fix bug with setting an item at index for array types.
                 // Save the existing value
-                this.rows[this.selected.row][this.columns[this.selected.column]] = this.selected.value;
+                this.setItem(this.selected.path, this.selected.value);
             }
             
             this.selected.active = true;
@@ -175,8 +225,8 @@ Vue.component('dynamic-table', {
             this.selected.y = event.target.offsetTop;
             this.selected.width = event.target.offsetWidth;
             this.selected.height = event.target.offsetHeight;
-            this.selected.row = col.row;
-            this.selected.column = col.column;
+            
+            this.selected.path = col.path;
             this.selected.value = col.value;
         }
     }
