@@ -190,6 +190,14 @@ Vue.component('dynamic-table', {
         }
     },
     methods: {
+        addRow: function(){
+            let newObject = {};
+            for(var i = 0; i < this.columns.length; i++){
+                // TODO: Append the appropriate zero value for each row
+                newObject[this.columns[i]] = ""
+            }
+            this.rows.append(newObject)
+        },
         setItem: function(path, value) {
             console.log(path);
             // TODO: This should eventually work for infinitely nested objects.
@@ -201,6 +209,7 @@ Vue.component('dynamic-table', {
                 // Have to do it this way to force it to update properly
                 var arrClone = this.rows[row][col].slice(0);
                 arrClone[index] = value;
+                // If you clear out the last value, then the cell goes away
                 if (index == arrClone.length -1 && value == "") {
                     arrClone.pop()
                 }
