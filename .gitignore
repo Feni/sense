@@ -8,3 +8,4 @@ elm-stuff/*
 *.pyc
 .cache/*
 db.sqlite3
+dataview/static/semantic/dist

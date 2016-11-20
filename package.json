@@ -9,6 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "semantic-ui": "^2.2.6",
     "vue": "^2.0.3"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1"
   }
 }

@@ -1,0 +1,56 @@
+{
+  "base": "dataview/static/semantic",
+  "paths": {
+    "source": {
+      "config": "src/theme.config",
+      "definitions": "src/definitions/",
+      "site": "src/site/",
+      "themes": "src/themes/"
+    },
+    "output": {
+      "packaged": "dist/",
+      "uncompressed": "dist/components/",
+      "compressed": "dist/components/",
+      "themes": "dist/themes/"
+    },
+    "clean": "dist/"
+  },
+  "autoInstall": false,
+  "rtl": true,
+  "components": [
+    "reset",
+    "site",
+    "button",
+    "container",
+    "divider",
+    "header",
+    "input",
+    "label",
+    "list",
+    "rail",
+    "segment",
+    "step",
+    "breadcrumb",
+    "form",
+    "grid",
+    "menu",
+    "message",
+    "table",
+    "card",
+    "comment",
+    "feed",
+    "item",
+    "statistic",
+    "accordion",
+    "checkbox",
+    "dropdown",
+    "search",
+    "sidebar",
+    "sticky",
+    "tab",
+    "api",
+    "form",
+    "state"
+  ],
+  "version": "2.2.6"
+}
