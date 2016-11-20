@@ -7,4 +7,5 @@ from .views import *
 
 urlpatterns = [
     url(r'^$', home),
+    url(r'^rows$', rows),
 ]
