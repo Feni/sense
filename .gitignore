@@ -7,3 +7,4 @@ src/frontend/elm-stuff/*
 elm-stuff/*
 *.pyc
 .cache/*
+db.sqlite3
