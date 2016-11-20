@@ -24,17 +24,24 @@
         </thead>
     </table>
 
+    <button id="addRow">AddRow</button>
+
     </div>
     
-    <script src="/static/node_modules/vue/dist/vue.js"></script>
+    
     <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+
+    <!--
+    <script src="/static/node_modules/vue/dist/vue.js"></script>
     <script src="/static/js/app.js"></script>
+    -->
     <script src="/static/semantic/dist/semantic.min.js"></script>
     <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 
     <script>
+
         $(document).ready(function() {
-            $('#example').DataTable({
+            var dt = $('#example').DataTable({
                 "ajax": "/rows",
                 "pageLength": 50,
                 "columns": [
@@ -43,7 +50,15 @@
                    { "data": "salary" }
                 ]
             });
+
+
+            $("#addRow").on('click', function() {
+                dt.row.add({"name": "", "position": "", "salary": ""}).draw(false);
+            });
+
+
         });
+
 
     </script>
 
