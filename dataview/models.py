@@ -10,6 +10,9 @@ class Collections(Model):
     def __str__(self):
         return self.name
 
+    def fields(self):
+        return self.collectionfields_set.all()
+
 class CollectionFields(Model):
     collection = ForeignKey("Collections")
     field_name = CharField(max_length=32, db_index=True)
@@ -23,5 +26,9 @@ class CollectionRows(Model):
     row_id  = IntegerField(db_index=True)
     row = JSONField(null=True)
     
+    @staticmethod
+    def max_id(collection):
+        return CollectionRows.objects.filter(collection=collection).aggregate(Max('row_id'))["row_id__max"]
+
     class Meta:
         unique_together = ("collection", "row_id")

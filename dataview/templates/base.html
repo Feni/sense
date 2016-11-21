@@ -1,0 +1,39 @@
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css"/>
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="/static/semantic/dist/semantic.rtl.min.css"/>
+</head>
+<body>
+    {% block menu %}
+    <header class="ui menu attached">
+        <div class="header item">
+            <h1 class="Logo">Sense</h1>
+        </div>
+    </header>
+    {% endblock %}
+
+    {% block content %}
+    <div class="ui container">
+    
+    </div>
+    {% endblock %}
+    
+    
+    
+    <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+
+    <!--
+    <script src="/static/node_modules/vue/dist/vue.js"></script>
+    <script src="/static/js/app.js"></script>
+    -->
+    <script src="/static/semantic/dist/semantic.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+
+    {% block extrajs %}
+
+    {% endblock %}
+
+</body>
+</html>

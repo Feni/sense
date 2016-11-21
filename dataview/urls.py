@@ -6,6 +6,6 @@ from .views import *
 
 urlpatterns = [
     url(r'^$', home),
-    url(r'^rows$', rows),
+    url(r'^new$', CollectionEntry.as_view())
 ]
 

@@ -1,66 +1,50 @@
-<html>
-<head>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-    <link rel="stylesheet" href="/static/css/style.css"/>
-    <link rel="stylesheet" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css"/>
-    <link rel="stylesheet" href="/static/semantic/dist/semantic.rtl.min.css"/>
-</head>
-<body>
-    <header class="ui menu attached">
-        <div class="header item">
-            <h1 class="Logo">Sense</h1>
-        </div>
-    </header>
-
-    <div class="ui container">
-
-    <table id="example" class="display" cellspacing="0" width="100%">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Salary</th>
-            </tr>
-        </thead>
-    </table>
-
-    <button id="addRow">AddRow</button>
-
+{% extends "base.html" %}
+{% block menu %}
+<header class="ui menu attached">
+    <div class="header item">
+        <h1 class="Logo">Sense</h1>
     </div>
-    
-    
-    <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+</header>
+{% endblock %}
 
-    <!--
-    <script src="/static/node_modules/vue/dist/vue.js"></script>
-    <script src="/static/js/app.js"></script>
-    -->
-    <script src="/static/semantic/dist/semantic.min.js"></script>
-    <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-
-    <script>
-
-        $(document).ready(function() {
-            var dt = $('#example').DataTable({
-                "ajax": "/rows",
-                "pageLength": 50,
-                "columns": [
-                   { "data": "name" },
-                   { "data": "position" },
-                   { "data": "salary" }
-                ]
-            });
+{% block content %}
+<div class="ui container">
+<table id="example" class="display" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Salary</th>
+        </tr>
+    </thead>
+</table>
+</div>
+{% endblock %}
 
 
-            $("#addRow").on('click', function() {
-                dt.row.add({"name": "", "position": "", "salary": ""}).draw(false);
-            });
+{% block extrajs %}
+<script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<script>
 
-
+    $(document).ready(function() {
+        var dt = $('#example').DataTable({
+            "ajax": {
+                "url": "/api/collectionrows/?format=json",
+                "dataSrc": "",
+            },
+            "pageLength": 50,
+            "columns": [
+                { "data": "name" },
+                { "data": "position" },
+                { "data": "salary" }
+            ]
         });
 
 
-    </script>
+        $("#addRow").on('click', function() {
+            dt.row.add({"name": "", "position": "", "salary": ""}).draw(false);
+        });
+    });
 
-</body>
-</html>
+</script>
+{% endblock %}
