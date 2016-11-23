@@ -9,6 +9,6 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-class CollectionRowsViewSet(viewsets.ModelViewSet):
-    queryset = CollectionRows.objects.all()
-    serializer_class = CollectionRowsSerializer
+class DatasetViewSet(viewsets.ModelViewSet):
+    queryset = Dataset.objects.all()
+    serializer_class = DatasetSerializer

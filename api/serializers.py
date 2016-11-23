@@ -11,14 +11,14 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 
-class CollectionRowsSerializer(serializers.ModelSerializer):
+class DatasetSerializer(serializers.ModelSerializer):
     class Meta:
-        model = CollectionRows
+        model = Dataset
         fields = '__all__'
 
     def get_field_map(self, obj):
         if not hasattr(self, "field_map"):
-            fields = obj.collection.collectionfields_set.all()
+            fields = obj.collection.fields()
             # TODO: This assumes that there's only a single collection in this set
             self.field_map = {f.field_key: f.field_name for f in fields}
         return self.field_map
