@@ -1,13 +1,4 @@
 {% extends "base.html" %}
-{% block top_menu %}
-<header class="ui menu attached">
-    <div class="header item">
-        <h1 class="Logo">Sense</h1>
-    </div>
-</header>
-{% endblock %}
-
-
 
 
 {% block content %}
@@ -43,33 +34,4 @@
 
 
 </div>
-{% endblock %}
-
-
-
-{% block extrajs %}
-<script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-<script>
-
-    $(document).ready(function() {
-        var dt = $('#example').DataTable({
-            "ajax": {
-                "url": "/api/dataset/?format=json",
-                "dataSrc": "",
-            },
-            "pageLength": 50,
-            "columns": [
-                { "data": "name" },
-                { "data": "position" },
-                { "data": "salary" }
-            ]
-        });
-
-
-        $("#addRow").on('click', function() {
-            dt.row.add({"name": "", "position": "", "salary": ""}).draw(false);
-        });
-    });
-
-</script>
 {% endblock %}
