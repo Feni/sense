@@ -2,6 +2,14 @@
 
 {% block inner_content %}
 
+    <div id="app">
+        <div class="MainContents">
+            <h2 contenteditable>Table Name</h2>
+            <dynamic-table></dynamic-table>
+        </div>
+    </div>
+
+
     <a href="create"><button class="ui basic button">Add Entry</button></a>
     <table id="example" class="display" cellspacing="0" width="80%">
         <thead>
@@ -13,11 +21,54 @@
         </thead>
     </table>
 
+
+
+
+        {% verbatim %}
+        <script type="text/x-template" id="tmpl-dynamic-table">
+        <div class="relative">
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th v-for="col in columns">{{ col }}</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                <template v-for="(row, rowindex) in renderedTable">
+                    <tr>
+                        <template v-for="(col, colindex) in row">
+                            <template v-if="col.header">
+                                <th v-bind:rowspan="col.rowspan">{{col.value}}</th>
+                            </template>
+                            <template v-else>
+                                <td v-on:click="select(col, $event)" v-bind:rowspan="col.rowspan">{{col.value}}</td>
+                            </template>
+                        </template>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+        
+        
+        <div class="CellInput" v-bind:class="{ hidden: !selected.active}" v-bind:style="{left: selected.x, top: selected.y, width: selected.width, height: selected.height}">
+            <textarea v-model="selected.value"></textarea>
+        </div>
+        
+        </div>
+        </script>
+    {% endverbatim %}
+
 {% endblock %}
 
 {% block extrajs %}
+<script src="/static/node_modules/vue/dist/vue.js"></script>
+<script src="/static/js/app.js"></script>
+
 <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 <script>
+    
 
     $(document).ready(function() {
         var dt = $('#example').DataTable({
