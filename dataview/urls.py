@@ -11,5 +11,6 @@ urlpatterns = [
     url(r'^$', CollectionListView.as_view()),
     url(r'^collections/(?P<pk>[-\w]+)/$', CollectionDetailView.as_view()),
     url(r'^collections/(?P<collection_id>[-\w]+)/create$', CollectionEntry.as_view())
+    url(r'^collections/(?P<collection_id>[-\w]+)/data/(?P<pk>)$', DataEntry.as_view())
 ]
 

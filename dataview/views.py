@@ -28,6 +28,17 @@ class CollectionContext(ContextMixin):
         context["collection"] = self.get_collection()
         return context
 
+class DatasetContext(ContextMixin):
+    def get_dataset(self):
+        if not hasattr(self, "_dataset"):
+            self._dataset = Dataset.objects.get(id=self.kwargs["collection_id"])
+        return self._dataset
+
+    def get_context_data(self, **kwargs):
+        context = super(CollectionContext, self).get_context_data(**kwargs)
+        context["collection"] = self.get_collection()
+        return context
+
 class CollectionListView(ListView):
     model = Collections
 
@@ -57,3 +68,6 @@ class CollectionEntry(CollectionsListContext, CollectionContext, FormView):
         newrow = Dataset(row_id=max_row_id + 1, row=values, collection=collection)
         newrow.save()
         return redirect("/")
+
+
+class DataEntry(CollectionsListContext, CollectionContext, FormView):

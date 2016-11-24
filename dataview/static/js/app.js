@@ -17,6 +17,19 @@ $.get("/api/dataset/?format=json", function(data){
     window.Sense.rows = data;
 })
 
+function deselect() {
+    window.Sense.selected.active = false;
+}
+
+
+$("html").click(function(){
+    if(!$(event.target).closest('.dynamic-table').length) {
+        deselect()
+    }
+})
+
+
+
 
 Vue.component('dynamic-table', {
     template: "#tmpl-dynamic-table",
@@ -131,17 +144,16 @@ Vue.component('dynamic-table', {
             } else {
                 this.rows[row][col] = value;
             }
-                
         },
-        select: function(col, event) {
-            console.log(col);
-            console.log(event);
-            window.evt = event;
+        saveEdit: function() {
             if(this.selected.active){
                 // Save the existing value
                 this.setItem(this.selected.path, this.selected.value);
             }
-            
+        },
+        select: function(col, event) {
+            window.evt = event;
+            this.saveEdit();
             this.selected.active = true;
             this.selected.x = event.target.offsetLeft;
             this.selected.y = event.target.offsetTop;
@@ -150,7 +162,17 @@ Vue.component('dynamic-table', {
             
             this.selected.path = col.path;
             this.selected.value = col.value;
-        }
+
+            $(".CellInput textarea").focus()
+        },
+        deselect: function(e) {
+            this.saveEdit();
+            this.selected.active = false;
+            e.preventDefault();
+            e.stopPropagation();
+        },
+        selectNextColumn: function(){},
+        selectPrevColumn: function(){},
     }
 });
 

@@ -150,6 +150,8 @@ th.action {
     resize: none;
     text-align: right;
     vertical-align: middle;
+    padding: .5em .7em;
+    overflow-y: hidden;
 }
 
 .ui.input input {
@@ -165,4 +167,8 @@ th.action {
 
 #sidebar > .item:first-child, #sidebar > .item:last-child {
     border-radius: 0px;
+}
+
+.ui.table {
+    width: inherit !important;
 }

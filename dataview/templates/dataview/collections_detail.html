@@ -15,7 +15,7 @@
 
     {% verbatim %}
         <script type="text/x-template" id="tmpl-dynamic-table">
-        <div class="relative">
+        <div class="relative dynamic-table">
         <table class="ui compact celled structured table">
             <thead>
                 <tr>
@@ -42,7 +42,8 @@
         
         
         <div class="CellInput" v-bind:class="{ hidden: !selected.active}" v-bind:style="{left: selected.x, top: selected.y, width: selected.width, height: selected.height}">
-            <textarea valign="middle" v-model="selected.value"></textarea>
+            <textarea v-on:keydown.enter="deselect" v-on:keydown.esc="deselect" 
+                       valign="middle" v-model="selected.value"></textarea>
         </div>
         
         </div>
