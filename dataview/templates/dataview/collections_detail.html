@@ -11,23 +11,12 @@
 
 
     <a href="create"><button class="ui basic button">Add Entry</button></a>
-    <table id="example" class="display" cellspacing="0" width="80%">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Salary</th>
-            </tr>
-        </thead>
-    </table>
 
 
-
-
-        {% verbatim %}
+    {% verbatim %}
         <script type="text/x-template" id="tmpl-dynamic-table">
         <div class="relative">
-        <table>
+        <table class="ui compact celled structured table">
             <thead>
                 <tr>
                     <th></th>
@@ -53,7 +42,7 @@
         
         
         <div class="CellInput" v-bind:class="{ hidden: !selected.active}" v-bind:style="{left: selected.x, top: selected.y, width: selected.width, height: selected.height}">
-            <textarea v-model="selected.value"></textarea>
+            <textarea valign="middle" v-model="selected.value"></textarea>
         </div>
         
         </div>
@@ -66,29 +55,4 @@
 <script src="/static/node_modules/vue/dist/vue.js"></script>
 <script src="/static/js/app.js"></script>
 
-<script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-<script>
-    
-
-    $(document).ready(function() {
-        var dt = $('#example').DataTable({
-            "ajax": {
-                "url": "/api/dataset/?format=json",
-                "dataSrc": "",
-            },
-            "pageLength": 50,
-            "columns": [
-                { "data": "name" },
-                { "data": "position" },
-                { "data": "salary" }
-            ]
-        });
-
-
-        $("#addRow").on('click', function() {
-            dt.row.add({"name": "", "position": "", "salary": ""}).draw(false);
-        });
-    });
-
-</script>
 {% endblock %}

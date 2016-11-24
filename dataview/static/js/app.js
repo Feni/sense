@@ -1,43 +1,27 @@
+window.Sense = {
+    "columns": ["name", "position", "salary"],
+    "rows": [],
+    "selected": {
+        "path": {},
+        "x": 132,
+        "y": 99,
+        "width": 20,
+        "height": 20,
+        "active": false,
+        "value": ""
+    }
+} 
+
+
+$.get("/api/dataset/?format=json", function(data){
+    window.Sense.rows = data;
+})
+
+
 Vue.component('dynamic-table', {
     template: "#tmpl-dynamic-table",
     data: function() {
-        return {
-            "columns": ["date", 
-                        "source", 
-                        "new customer", 
-                        "customer", 
-                        "items", 
-                        "quantity"],
-            "rows": [
-                {
-                    "id": 1,
-                    "date": "2016/05/10",
-                    "source": "internet",
-                    "customer": "",
-                    "new customer": "Yes",
-                    "items": ["Item 1", "Item 2"], 
-                    "quantity": [3, 5, 7]
-                },
-                {
-                    "id": 2,
-                    "date": "2016/07/10",
-                    "source": "walkin",
-                    "new customer": "No",
-                    "customer": "Bob",
-                    "items": ["Item 1"], 
-                    "quantity": [1]
-                }
-            ],
-            "selected": {
-                "path": {},
-                "x": 132,
-                "y": 99,
-                "width": 20,
-                "height": 20,
-                "active": false,
-                "value": ""
-            }
-        }
+        return window.Sense
     }, 
     computed: {
         renderedTable: function() {
