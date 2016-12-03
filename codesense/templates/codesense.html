@@ -1,0 +1,136 @@
+{% extends "collection_base.html" %}
+
+{% block sidebar %}
+    <div class="ui vertical menu full width" id="sidebar">
+        <div class="item">
+            <div class="ui input left">
+                <input type="text" placeholder="Search...">
+            </div>
+        </div>
+
+        <div class="item">
+            Sections
+            <div class="menu">
+            {% for section_option in sections %}
+                <a class="item" href="{{ section_option.get_absolute_url }}">
+                    {{ section_option }}
+                </a>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block inner_content %}
+
+    <div class="ui main content">
+
+        <div class="ui code grid">
+            <div class="three column row">
+                <div class="two wide column">
+                </div>
+                <div class="eight wide column">
+                    <h1 contenteditable="">Fizz Buzz</h1>
+                </div>
+            </div>
+
+
+            <div class="three column row">
+                <div class="two wide column">
+                </div>
+                <div class="eight wide column">
+                    <p contenteditable>
+            Write a program that prints the numbers from 1 to 100. 
+        But for multiples of three print "Fizz" instead of the number and for the multiples of five print "Buzz".
+        For numbers which are multiples of both three and five print "FizzBuzz".
+        </p>
+                </div>
+            </div>
+
+            <div class="three column row">
+                <div class="two wide column VariableName" contenteditable>
+                    Minimum
+                </div>
+                <div class="eight wide column">
+                    <p contenteditable>
+                    1
+                    </p>
+                </div>
+            </div>
+
+
+
+            <div class="three column row">
+                <div class="two wide column VariableName">
+                    Maximum
+                </div>
+                <div class="eight wide column">
+                    <p>
+                    100
+                    </p>
+                </div>
+                <div class="five wide column">The upper bounds of the loops for this.</div>
+            </div>
+
+
+
+            <div class="three column row">
+                <div class="two wide column VariableName">
+                </div>
+                <div class="eight wide column">
+                    <b>Range</b>
+                    <label>Min</label>: 1
+                    <label>Max</label>: 100
+                    <label>Step</label>: 1
+                </div>
+                
+            </div>
+
+
+
+        </div>
+
+
+
+        
+
+
+
+        
+
+    </div>
+
+
+    <div id="app"></div>
+
+
+
+{% endblock %}
+
+{% block extrajs %}
+<script src="/static/node_modules/vue/dist/vue.js"></script>
+<script>
+window.Sense = {
+} 
+
+Vue.component('dynamic-table', {
+    template: "#tmpl-dynamic-table",
+    data: function() {
+        return window.Sense
+    }, 
+    computed: {
+    },
+    methods: {
+    }
+});
+
+
+
+var app = new Vue({
+    el: '#app',
+    methods: { }
+});
+
+</script>
+{% endblock %}

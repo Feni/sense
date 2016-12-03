@@ -1,13 +1,16 @@
+html {
+    font-size: 16px;
+}
+
 body{
     margin:0;
     line-height:1.6;
     width: 100%;
-    font-size:18px;
     color:#212121;
     padding:0;
     height: 100%;
     font-family: "Open Sans", sans-serif;
-    font-size: 16px;
+    font-size: 15px !important;
 }
 
 
@@ -163,6 +166,7 @@ th.action {
     border-radius: 0px;
     box-shadow: none;
     border-top: 0px;
+    width: 100%;
 }
 
 #sidebar > .item:first-child, #sidebar > .item:last-child {
@@ -171,4 +175,16 @@ th.action {
 
 .ui.table {
     width: inherit !important;
+}
+
+.ui.code.grid .row {
+    padding: 0.42rem 0px;
+}
+
+.align.right {
+    text-align: right;
+}
+
+.VariableName {
+    text-align: left;
 }

@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     # 'debug_toolbar',
     'rest_framework',
     'dataview',
+    'codesense',
     'api'
 ]
 

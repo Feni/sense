@@ -69,5 +69,3 @@ class CollectionEntry(CollectionsListContext, CollectionContext, FormView):
         newrow.save()
         return redirect("/")
 
-
-class DataEntry(CollectionsListContext, CollectionContext, FormView):
