@@ -7,3 +7,4 @@ class CollectionEntryForm(Form):
 
         for i, field in enumerate(json_fields):
             self.fields['json_%s' % i] = CharField(label=field)
+        print(self.fields)

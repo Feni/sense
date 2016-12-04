@@ -8,6 +8,6 @@ from .views import *
 # Forms and api endpoints should be verbs
 
 urlpatterns = [
-    url(r'^$', CodeSenseHome.as_view()),
+    # url(r'^$', CodeSenseHome.as_view()),
 ]
 

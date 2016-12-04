@@ -55,5 +55,16 @@
 {% block extrajs %}
 <script src="/static/node_modules/vue/dist/vue.js"></script>
 <script src="/static/js/app.js"></script>
+<script>
+    $.get("/api/collections/{{ collection.id }}/dataset?format=json", function(data){
+        console.log(data);
+        if(data.length > 0) {
+            window.Sense.rows = data;
+            // TODO: Superset of all keys from all rows
+            window.Sense.columns = Object.keys(data[0])
+        }
+    })
+
+</script>
 
 {% endblock %}

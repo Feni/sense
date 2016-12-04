@@ -8,9 +8,14 @@ from .views import *
 # Forms and api endpoints should be verbs
 
 urlpatterns = [
-    url(r'^collections/$', CollectionListView.as_view()),
-    url(r'^collections/(?P<pk>[-\w]+)/$', CollectionDetailView.as_view()),
+    url(r'^collections/(?P<collection_id>[-\w]+)/dataset/(?P<row_id>[-\w]+)$', DataEntry.as_view()),
     url(r'^collections/(?P<collection_id>[-\w]+)/create$', CollectionEntry.as_view()),
-    # url(r'^collections/(?P<collection_id>[-\w]+)/data/(?P<pk>)$', DataEntry.as_view())
+    url(r'^collections/(?P<collection_id>[-\w]+)/$', CollectionDetailView.as_view()),
+    url(r'^collections/$', CollectionListView.as_view()),
+
+    url(r'^collections/(?P<collection_id>[-\w]+)/columns$', CollectionEntry.as_view()),
+    
+    url(r'^$', CollectionListView.as_view()),
+    
 ]
 

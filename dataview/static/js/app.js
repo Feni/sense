@@ -1,5 +1,5 @@
 window.Sense = {
-    "columns": ["name", "position", "salary"],
+    "columns": [],
     "rows": [],
     "selected": {
         "path": {},
@@ -12,10 +12,6 @@ window.Sense = {
     }
 } 
 
-
-$.get("/api/dataset/?format=json", function(data){
-    window.Sense.rows = data;
-})
 
 function deselect() {
     window.Sense.selected.active = false;

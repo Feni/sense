@@ -9,6 +9,19 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('url', 'username', 'email', 'is_staff')
 
+class CollectionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Collections
+        fields = ('name', 'id')
+
+    def create(self, validated_data):
+        return Collections.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get('name', instance.name)
+        instance.save()
+        return instance
+
 
 
 class DatasetSerializer(serializers.ModelSerializer):
@@ -26,3 +39,5 @@ class DatasetSerializer(serializers.ModelSerializer):
     def to_representation(self, obj):
         field_map = self.get_field_map(obj)
         return {field_map[key]: value for key, value in obj.row.items() if key in field_map}
+
+
