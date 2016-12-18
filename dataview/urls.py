@@ -16,6 +16,5 @@ urlpatterns = [
     url(r'^collections/(?P<collection_id>[-\w]+)/columns$', CollectionEntry.as_view()),
     
     url(r'^$', CollectionListView.as_view()),
-    
 ]
 
