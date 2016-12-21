@@ -21,89 +21,68 @@
     </div>
 {% endblock %}
 
-
 {% block inner_content %}
-
     <div class="ui main content">
-
         <div class="ui code grid">
-            <div class="three column row">
-                <div class="two wide column">
-                </div>
-                <div class="eight wide column">
-                    <h1 contenteditable="">Fizz Buzz</h1>
-                </div>
-            </div>
+            <div id="app">
 
-
-            <div class="three column row">
-                <div class="two wide column">
-                </div>
-                <div class="eight wide column">
-                    <p contenteditable>
-            Write a program that prints the numbers from 1 to 100. 
-        But for multiples of three print "Fizz" instead of the number and for the multiples of five print "Buzz".
-        For numbers which are multiples of both three and five print "FizzBuzz".
-        </p>
-                </div>
-            </div>
-
-            <div class="three column row">
-                <div class="two wide column VariableName" contenteditable>
-                    Minimum
-                </div>
-                <div class="eight wide column">
-                    <p contenteditable>
-                    1
-                    </p>
-                </div>
-            </div>
-
-
-
-            <div class="three column row">
-                <div class="two wide column VariableName">
-                    Maximum
-                </div>
-                <div class="eight wide column">
-                    <p>
-                    100
-                    </p>
-                </div>
-                <div class="five wide column">The upper bounds of the loops for this.</div>
-            </div>
-
-
-
-            <div class="three column row">
-                <div class="two wide column VariableName">
-                </div>
-                <div class="eight wide column">
-                    <b>Range</b>
-                    <label>Min</label>: 1
-                    <label>Max</label>: 100
-                    <label>Step</label>: 1
-                </div>
+                <code-cell v-bind:cell-id="5"></code-cell>
+                <code-cell v-bind:cell-id="0"></code-cell>
+                <code-cell v-bind:cell-id="1"></code-cell>
+                <code-cell v-bind:cell-id="2"></code-cell>
                 
             </div>
-
-
-
         </div>
-
-
-
-        
-
-
-
-        
-
     </div>
 
 
-    <div id="app"></div>
+{% verbatim %}
+    <script id="tmpl-code-cell" type="text/x-template">
+        <div class="FuncInstance Box">
+            <h1 class="FuncInstance-name">{{ cell.name }}</h1>
 
+            <select v-model="cell.type">
+                <option>number</option>
+                <option>text</option>
+                <option>reference</option>
+                <option>function</option>
+            </select>
+
+            <div>
+                <div v-if="cell.type === 'number'">
+                    <input type="number" v-model="cell.input"></input>
+                </div>
+                <div v-else-if="cell.type === 'text'">
+                    <input type="text" v-model="cell.input"></input>
+                </div>
+                <div v-else-if="cell.type === 'reference'">
+                    <select v-model="cell.input">
+                        <option v-for="ref in references">{{ ref.name }}</option>
+                    </select>
+                </div>
+                <div v-else-if="cell.type === 'function'">
+                    
+                    <select v-model="cell.input">
+                        <option v-for="fun in sense.functions">{{ fun.name }}</option>
+                    </select>
+
+                    <code-cell v-for='subcell in cell.args' v-bind:cell-id="subcell"></code-cell>
+                    
+                </div>
+                <div v-else>
+                  Unknown input type
+                </div>
+
+                
+            </div>
+
+            <div class="FuncInstance-label text-right">
+                {{ output }}
+            </div>
+
+        </div>
+    </script>
+{% endverbatim %}
 
 
 {% endblock %}
@@ -111,21 +90,114 @@
 {% block extrajs %}
 <script src="/static/node_modules/vue/dist/vue.js"></script>
 <script>
+    
 window.Sense = {
-} 
+    cells: [
+        {
+            'id': '0',
+            'name': 'A',
+            'input': 1,
+            'type': 'number'
+        },
+        {
+            'id': '1',
+            'name': 'B',
+            'input': 2,
+            'type': 'number'
+        },
+        {
+            'id': '2',
+            'name': 'C',
+            'input': 'A',
+            'type': 'reference'
+        },
+        {
+            'id': '3',
+            'name': 'func_a',
+            'input': '',
+            'type': 'reference'
+        },
+        {
+            'id': '4',
+            'name': 'func_b',
+            'input': '',
+            'type': 'reference'
+        },
+        {
+            'id': '5',
+            'name': 'funa',
+            'input': 'add',
+            'args': ['3', '4'],
+            'type': 'function'
+        },
 
-Vue.component('dynamic-table', {
-    template: "#tmpl-dynamic-table",
+    ], 
+    functions: {
+        'add': {
+            'id': '12321',
+            'name': 'add',
+            // This is the template it would follow when creating the function
+            'inputs': {
+            }, 
+            'evaluate': function(inputs) {
+                return inputs[0] + inputs[1]
+            }
+        }
+    }
+}
+
+function getCellOutput(cell, depth) {
+    // Max recursion depth
+    if ( depth > 100 ) {
+        // TODO: Support for errors
+        return -1;
+    }
+
+    if(cell.type === 'number' || cell.type === 'text') {
+        return cell.input;
+    } else if (cell.type === 'reference') {
+        for(var i = 0; i < window.Sense.cells.length; i++){
+            var ci = window.Sense.cells[i];
+            // Later it will reference by id, which is unique, rather than name. 
+            if(ci.name === cell.input){
+                // return ci.input  // TODO: This should be that cell's output not it's input
+                return getCellOutput(ci, depth + 1)
+            }
+        }
+    } else if (cell.type === 'function') {
+        // First evaluate all of the arguments
+        var args = [];
+        for(var i = 0; i < cell.args.length; i++){
+            var ai = cell.args[i];
+            // TODO: This will later be the cell ids rather than absolute position
+            args.push(getCellOutput(window.Sense.cells[ai]))
+        }
+        return window.Sense.functions[cell.input].evaluate(args);
+    }
+}
+
+Vue.component('code-cell', {
+    template: "#tmpl-code-cell",
     data: function() {
         return window.Sense
-    }, 
-    computed: {
     },
-    methods: {
-    }
+    props: ['cellId'],
+    computed: {
+        cell: function() {
+            return window.Sense.cells[this.cellId]
+        },
+        output: function() {
+            return getCellOutput(window.Sense.cells[this.cellId], 0);
+        }, 
+        references: function() {
+            // Maybe omit other things that are themselves references?
+            return window.Sense.cells;
+        }, 
+        sense: function() {
+            return window.Sense;
+        }
+    },
 });
-
-
 
 var app = new Vue({
     el: '#app',

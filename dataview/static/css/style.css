@@ -188,3 +188,10 @@ th.action {
 .VariableName {
     text-align: left;
 }
+
+
+/* codesense */
+
+.text-right {
+    text-align: right;
+}
