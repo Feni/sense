@@ -24,7 +24,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'dataview',
     'codesense',
-    'api'
+    'api',
+    'lingo',
 ]
 
 MIDDLEWARE = [
