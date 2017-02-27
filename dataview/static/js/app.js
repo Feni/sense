@@ -51,7 +51,7 @@ Vue.component('dynamic-table', {
                 for(var rowId = 0; rowId < rowspan; rowId++) {
                     let currentRow = [];
                     if(rowId === 0){
-                        currentRow.push({rowspan: rowspan, value: r + 1, "header": true});
+                        currentRow.push({rowspan: rowspan, value: r + 1, "header": true });
                     }
                     
                     for(var c = 0; c < this.columns.length; c++){

@@ -22,7 +22,6 @@ urlpatterns = [
     url('^', include('django.contrib.auth.urls')),
     url(r'^', include('dataview.urls')),
     url(r'^', include('codesense.urls')),
-    url(r'^', include('lingo.urls')),
     url(r'^api/', include('api.urls'))
 ]
 

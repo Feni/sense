@@ -6,80 +6,6 @@
         <div class="MainContents">
             <h1>{{ collection.name }}</h1>
 
-            <div class="ui secondary segment">
-
-                <div class="ui grid">
-                    <div class="eight wide column">
-                    <form class="ui form">
-                        <h2 class="ui dividing header">Inputs</h2>
-
-                        <div class="two fields">
-
-                            <div class="field">
-                                <label>Name</label>
-                                <input></input>
-                            </div>
-
-
-                            <div class="field">
-                            <label>Type (optional)</label>
-                            
-                            <div class="ui selection dropdown" tabindex="0">
-                                <input type="hidden" name="type">
-                                <div class="default text">Type</div>
-                                <i class="dropdown icon"></i>
-                                <div class="menu" tabindex="-1">
-                                    <div class="item" data-value="Number">
-                                    Number
-                                    </div>
-                                    <div class="item" data-value="Text">
-                                    Text
-                                    </div>
-                                    <div class="item" data-value="Boolean">
-                                    Boolean
-                                    </div>
-                                </div>
-                            </div>
-                            
-                        </div>
-
-
-                        </div>
-
-
-                        
-                        <div class="field">
-                            <label>Description</label>
-                            <textarea rows=2></textarea>
-                        </div>
-                        <button>Add Input</button>
-                    </form>
-                    </div>
-
-
-
-
-                    <div class="eight wide column">
-                    <form class="ui form">
-                        <h2 class="ui dividing header">Outputs</h2>
-                        <div class="field">
-                            <label>Name</label>
-                            <div class="two fields">
-                                <div class="field"><input></input></div>
-                                <div class="field"><input></input></div>
-                            </div>
-                        </div>
-                        <button>Add Output</button>
-                    </form>
-                    </div>
-
-                </div>
-                
-                
-                
-            </div>
-
-
             <dynamic-table></dynamic-table>
         </div>
     </div>
@@ -95,7 +21,9 @@
             <thead>
                 <tr>
                     <th></th>
-                    <th v-for="col in columns">{{ col }}</th>
+                    <th v-for="col in columns">
+                        {{ col }}
+                    </th>
                 </tr>
             </thead>
             
@@ -104,7 +32,7 @@
                     <tr>
                         <template v-for="(col, colindex) in row">
                             <template v-if="col.header">
-                                <th v-bind:rowspan="col.rowspan">{{col.value}}</th>
+                                <th v-bind:rowspan="col.rowspan"><a v-bind:href="'dataset/' + col.value" >{{col.value}}</a></th>
                             </template>
                             <template v-else>
                                 <td v-on:click="select(col, $event)" v-bind:rowspan="col.rowspan">{{col.value}}</td>
